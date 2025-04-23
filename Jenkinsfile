@@ -19,12 +19,12 @@ pipeline{
         }
         stage('this code package'){
             steps{
-                sh 'mvn package'
+                sh 'mvn clean package'
             }
         }
         stage('build docker image'){
             steps{
-                sh 'cp /var/lib/jenkins/workspace/CI-CD-Pipeline/target/ABCtechnologies-1.0-1.0.war abc_tech.war'
+                sh 'cp /var/lib/jenkins/workspace/CI-CD-Pipeline/target/ABCtechnologies-1.0.war abc_tech.war'
                 sh 'docker build -t theman764/abc:latest .'
             }
         }
