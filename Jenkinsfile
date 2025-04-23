@@ -35,6 +35,7 @@ pipeline{
                     sh 'docker push theman764/abc:latest'
                 }
             }
+        }
 
         stage('Deploy as container') {
             steps {
