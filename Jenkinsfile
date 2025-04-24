@@ -43,6 +43,17 @@ pipeline{
                 sh 'docker run -itd -p 8081:8081 --name abcapp theman764/abc:latest'
             }
         }
+         
+         stage('Deploy to k8s cluster') {
+            steps {
+                withCredentials([file(credentialsId: 'kubeconfig1', variable: 'KUBECONFIG')]) {
+                    // Create or update the Kubernetes deployment
+                    sh "kubectl delete deployment abcapp --ignore-not-found"
+                    sh "kubectl create deployment abcapp --image=theman764/abc:latest"
+
+                }
+            }
+        }
     }
 
 }
