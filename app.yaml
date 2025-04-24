@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: abc
+  labels:
+    app: abc  # Label applied to deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: abc  # Pods will have this label
+  template:
+    metadata:
+      labels:
+        app: abc  # Pods inherit this label
+    spec:
+      containers:
+      - name: abc
+        image: theman764/abc:latest
+        ports:
+        - containerPort: 8081  # Match the exposed port
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: abc-nodeport-svc
+spec:
+  selector:
+    app: abc # This must match the pod label
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8081
+      nodePort: 31879
+  type: NodePort
+
